@@ -72,7 +72,7 @@ def get_feed(num_days, start_date=None):
 
 @app.route('/recent.atom')
 def feed():
-    return get_feed(3)
+    return get_feed(10)
 
 if __name__ == '__main__':
     app.run(
