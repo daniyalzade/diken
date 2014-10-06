@@ -44,6 +44,7 @@ def _get_item(date):
         if not header.text:
             continue
         content += u"<h4>%s</h4>" % unicode(header.text)
+        content += u"<p>%s</p>" % unicode(header.find_next_sibling().text)
 
     item = {
             'content_type': 'html',
