@@ -39,12 +39,11 @@ def _get_item(date):
     headers = soup.find('div', {'class': 'entry-content'}).find_all('h4')
     month = MONTHS[date.month - 1]
     title = 'Aksam Postasi - %s %s %s' % (date.day, month, date.year)
-    content = ''
+    content = u''
     for header in headers:
         if not header.text:
             continue
-        content += header.text
-        content += header.find_next_sibling().text
+        content += u"<h4>%s</h4>" % unicode(header.text)
 
     item = {
             'content_type': 'html',
@@ -57,7 +56,7 @@ def _get_item(date):
     return item
 
 def get_feed(num_days, start_date=None):
-    start_date = start_date or datetime.now()
+    start_date = start_date or (datetime.now() - timedelta(days=1))
     feed = AtomFeed('Aksam Postasi - Diken Gazete',
                     feed_url='http://www.diken.com.tr/',
                     url='http://www.diken.com.tr/',
@@ -75,4 +74,8 @@ def feed():
     return get_feed(3)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(
+            host='0.0.0.0',
+            debug=True,
+            )
+    #get_feed(3)
